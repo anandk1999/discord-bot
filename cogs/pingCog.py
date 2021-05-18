@@ -12,9 +12,9 @@ class ExampleCog(commands.Cog):
         print('Bot is online.')
 
     # Commands
-    @commands.command()
+    @commands.command(aliases=['latency'])
     async def ping(self, ctx):
-        await ctx.send('Pong!')
+        await ctx.send(f'Pong! `{round(client.latency * 1000)}ms`')
 
 def setup(client):
     client.add_cog(ExampleCog(client))
