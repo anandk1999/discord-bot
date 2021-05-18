@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-class ExampleCog(commands.Cog):
+class PingCog(commands.Cog):
 
     def __init__(self, client):
         self.client = client
@@ -12,9 +12,9 @@ class ExampleCog(commands.Cog):
         print('Bot is online.')
 
     # Commands
-    @commands.command()
+    @commands.command(aliases=['latency'])
     async def ping(self, ctx):
-        await ctx.send('Pong!')
+        await ctx.send(f'Pong! {round(client.latency * 1000)}ms')
 
 def setup(client):
-    client.add_cog(ExampleCog(client))
+    client.add_cog(PingCog(client))
