@@ -7,10 +7,7 @@ client = commands.Bot(command_prefix= 'd!')
 
 @client.event
 async def on_ready():
-    print(f'{client.user.name} is ready.')
-    # print(f'Bot is in {len(client.guilds)} guilds.')
-    # print(f'Guilds have {len(client.users)} members.')
-    await client.change_presence(activity=discord.Streaming(name="Click the link!", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
+    print(f'{client.user.name} is online.')
 
 @client.command()
 async def load(ctx, extension):
