@@ -7,7 +7,8 @@ client = commands.Bot(command_prefix= 'd!')
 
 @client.event
 async def on_ready():
-    print(f'{client.user.name} is online.')
+    print(f'{client.user.name} is ready.')
+    await client.change_presence(activity=discord.Streaming(name="duck pictures.", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
 
 @client.command()
 async def load(ctx, extension):
