@@ -107,12 +107,20 @@ class MusicCog(commands.Cog):
         voice = ctx.voice_client
         voice.stop()
 
-    '''@commands.command(aliases=['join'])
+    @commands.command(aliases=['join'])
     async def connect(self, ctx):
         channel = ctx.author.voice.channel
-        await channel.connect()
+        try:
+            await channel.connect()
+        except:
+            voice = ctx.voice_client
+            if voice.is_connected():
+                await voice.disconnect()
+                await channel.connect()
+        else:
+            await channel.connect()
 
-    @commands.command(aliases=['dc','leave'])
+    '''@commands.command(aliases=['dc','leave'])
     async def disconnect(self, ctx):
         await ctx.voice_client.disconnect()'''
 
