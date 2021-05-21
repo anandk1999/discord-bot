@@ -1,6 +1,9 @@
 import os
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
+
+load_dotenv()
 
 TOKEN = os.environ.get("TOKEN")
 client = commands.Bot(command_prefix= 'd!')
