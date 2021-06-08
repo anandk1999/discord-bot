@@ -24,7 +24,7 @@ async def unload(ctx, extension):
 # Subfolders
 for filename in os.listdir('./cogs/fun'):
     if filename.endswith('.py'):
-        client.load_extension(f'cogs.music.{filename[:-3]}')
+        client.load_extension(f'cogs.fun.{filename[:-3]}')
 
 for filename in os.listdir('./cogs/general'):
     if filename.endswith('.py'):
@@ -32,7 +32,7 @@ for filename in os.listdir('./cogs/general'):
 
 for filename in os.listdir('./cogs/info'):
     if filename.endswith('.py'):
-        client.load_extension(f'cogs.music.{filename[:-3]}')
+        client.load_extension(f'cogs.info.{filename[:-3]}')
 
 for filename in os.listdir('./cogs/moderation'):
     if filename.endswith('.py'):
@@ -44,6 +44,6 @@ for filename in os.listdir('./cogs/music'):
 
 for filename in os.listdir('./cogs/owner'):
     if filename.endswith('.py'):
-        client.load_extension(f'cogs.music.{filename[:-3]}')
+        client.load_extension(f'cogs.owner.{filename[:-3]}')
 
 client.run(TOKEN)
