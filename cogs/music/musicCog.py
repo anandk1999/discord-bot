@@ -55,6 +55,10 @@ class MusicCog(commands.Cog):
     @commands.command()
     async def play(self, ctx, url):
         """Streams from a url"""
+
+        if ctx.author.voice is None:
+            return await ctx.send("You're not connected to a voice channel.")
+
         try:
             channel = ctx.author.voice.channel
             await channel.connect()
@@ -77,15 +81,23 @@ class MusicCog(commands.Cog):
     @commands.command(aliases=['disconnect, dc'])
     async def leave(self, ctx):
         """Disconnects bot from the voice channel"""
+
+        if ctx.author.voice is None:
+            return await ctx.send("You're not connected to a voice channel.")
+
         voice = ctx.voice_client
-        if voice.is_connected():
-            await voice.disconnect()
+        if voice is not None:
+            if voice.is_connected():
+                await voice.disconnect()
         else:
             await ctx.send("The bot is not connected to a voice channel.")
 
     @commands.command()
     async def volume(self, ctx, volume: int):
         """Changes the player's volume"""
+
+        if ctx.author.voice is None:
+            return await ctx.send("You're not connected to a voice channel.")
 
         if ctx.voice_client is None:
             return await ctx.send("Not connected to a voice channel.")
@@ -96,6 +108,10 @@ class MusicCog(commands.Cog):
     @commands.command()
     async def pause(self, ctx):
         """Pauses audio"""
+
+        if ctx.author.voice is None:
+            return await ctx.send("You're not connected to a voice channel.")
+
         voice = ctx.voice_client
         if voice.is_playing():
             voice.pause()
@@ -105,6 +121,10 @@ class MusicCog(commands.Cog):
     @commands.command()
     async def resume(self, ctx):
         """Resumes currently paused audio"""
+
+        if ctx.author.voice is None:
+            return await ctx.send("You're not connected to a voice channel.")
+
         voice = ctx.voice_client
         if voice.is_paused():
             voice.resume()
@@ -115,12 +135,20 @@ class MusicCog(commands.Cog):
     async def stop(self, ctx):
         """Stops and disconnects the bot from voice"""
 
+        if ctx.author.voice is None:
+            return await ctx.send("You're not connected to a voice channel.")
+
         voice = ctx.voice_client
-        voice.stop()
+        if voice:
+            voice.stop()
 
     @commands.command(aliases=['join'])
     async def connect(self, ctx):
         """Connects bot to currently connected voice channel"""
+
+        if ctx.author.voice is None:
+            return await ctx.send("You're not connected to a voice channel.")
+
         channel = ctx.author.voice.channel
         try:
             await channel.connect()
