@@ -53,21 +53,30 @@ class MusicCog(commands.Cog):
     # Commands
 
     @commands.command()
-    async def play(self, ctx, *, url):
-        """Streams from a url (same as yt, but doesn't predownload)"""
+    async def play(self, ctx, url):
+        """Streams from a url"""
         try:
-            voiceChannel = discord.utils.get(ctx.guild.voice_channels, guild=ctx.guild)
-            await voiceChannel.connect()
+            channel = ctx.author.voice.channel
+            await channel.connect()
         except:
             pass
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.client.loop, stream=True)
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
-
         await ctx.send(f'Now playing: {player.title}')
 
-    @commands.command()
+    @play.error
+    async def play_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            voice = ctx.voice_client
+            if voice != None and voice.is_paused():
+                voice.resume()
+            else:
+                await ctx.send("Missing URL!")
+
+    @commands.command(aliases=['disconnect, dc'])
     async def leave(self, ctx):
+        """Disconnects bot from the voice channel"""
         voice = ctx.voice_client
         if voice.is_connected():
             await voice.disconnect()
@@ -86,6 +95,7 @@ class MusicCog(commands.Cog):
 
     @commands.command()
     async def pause(self, ctx):
+        """Pauses audio"""
         voice = ctx.voice_client
         if voice.is_playing():
             voice.pause()
@@ -94,6 +104,7 @@ class MusicCog(commands.Cog):
 
     @commands.command()
     async def resume(self, ctx):
+        """Resumes currently paused audio"""
         voice = ctx.voice_client
         if voice.is_paused():
             voice.resume()
@@ -109,20 +120,15 @@ class MusicCog(commands.Cog):
 
     @commands.command(aliases=['join'])
     async def connect(self, ctx):
+        """Connects bot to currently connected voice channel"""
         channel = ctx.author.voice.channel
         try:
             await channel.connect()
         except:
             voice = ctx.voice_client
-            if voice.is_connected():
+            if voice.is_connected() and voice.channel != channel:
                 await voice.disconnect()
                 await channel.connect()
-        else:
-            await channel.connect()
-
-    '''@commands.command(aliases=['dc','leave'])
-    async def disconnect(self, ctx):
-        await ctx.voice_client.disconnect()'''
 
 def setup(client):
     client.add_cog(MusicCog(client))
