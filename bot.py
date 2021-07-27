@@ -26,13 +26,13 @@ async def unload(ctx, extension):
     client.unload_extension(f'cogs.{extension}')
 
 # Subfolders
-for filename in os.listdir('./cogs/fun'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.fun.{filename[:-3]}')
+# for filename in os.listdir('./cogs/fun'):
+#     if filename.endswith('.py'):
+#         client.load_extension(f'cogs.fun.{filename[:-3]}')
 
-for filename in os.listdir('./cogs/general'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.general.{filename[:-3]}')
+# for filename in os.listdir('./cogs/general'):
+#     if filename.endswith('.py'):
+#         client.load_extension(f'cogs.general.{filename[:-3]}')
 
 for filename in os.listdir('./cogs/info'):
     if filename.endswith('.py'):
@@ -46,9 +46,9 @@ for filename in os.listdir('./cogs/music'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.music.{filename[:-3]}')
 
-for filename in os.listdir('./cogs/owner'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.owner.{filename[:-3]}')
+# for filename in os.listdir('./cogs/owner'):
+#     if filename.endswith('.py'):
+#         client.load_extension(f'cogs.owner.{filename[:-3]}')
 
 for filename in os.listdir('./cogs/inventory'):
     if filename.endswith('.py'):
