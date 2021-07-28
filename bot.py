@@ -1,3 +1,4 @@
+# Import all required packages and variables
 import os
 import discord
 from discord.ext import commands
@@ -6,8 +7,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TOKEN = os.environ.get("TOKEN")
-client = commands.Bot(command_prefix= 'd!')
+client = commands.Bot(command_prefix='d!')
 
+# Bot initialized
 @client.event
 async def on_ready():
     print(f'{client.user.name} is ready.')
@@ -25,15 +27,7 @@ async def unload(ctx, extension):
     """Unloads a cog"""
     client.unload_extension(f'cogs.{extension}')
 
-# Subfolders
-# for filename in os.listdir('./cogs/fun'):
-#     if filename.endswith('.py'):
-#         client.load_extension(f'cogs.fun.{filename[:-3]}')
-
-# for filename in os.listdir('./cogs/general'):
-#     if filename.endswith('.py'):
-#         client.load_extension(f'cogs.general.{filename[:-3]}')
-
+# Cogs
 for filename in os.listdir('./cogs/info'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.info.{filename[:-3]}')
@@ -45,10 +39,6 @@ for filename in os.listdir('./cogs/moderation'):
 for filename in os.listdir('./cogs/music'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.music.{filename[:-3]}')
-
-# for filename in os.listdir('./cogs/owner'):
-#     if filename.endswith('.py'):
-#         client.load_extension(f'cogs.owner.{filename[:-3]}')
 
 for filename in os.listdir('./cogs/inventory'):
     if filename.endswith('.py'):
