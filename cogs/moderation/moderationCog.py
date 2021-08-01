@@ -3,8 +3,8 @@ from discord.ext import commands
 
 class ModerationCog(commands.Cog):
 
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.bot = bot
 
     # Commands
     @commands.command()
@@ -15,7 +15,7 @@ class ModerationCog(commands.Cog):
             await member.kick(reason=reason)
             await ctx.send(member.mention + " has been kicked.")
         except:
-            await ctx.send(f"Unable to kick {member.mention}.\nIs {member.mention} at the same role level or higher than {self.client.user.name}?")
+            await ctx.send(f"Unable to kick {member.mention}.\nIs {member.mention} at the same role level or higher than {self.bot.user.name}?")
 
     @commands.command()
     @commands.has_permissions(ban_members = True)
@@ -25,7 +25,7 @@ class ModerationCog(commands.Cog):
             await member.ban(reason=reason)
             await ctx.send(member.mention + " has been banned.")
         except:
-            await ctx.send(f"Unable to ban {member.mention}.\nIs {member.mention} at the same role level or higher than {self.client.user.name}?")
+            await ctx.send(f"Unable to ban {member.mention}.\nIs {member.mention} at the same role level or higher than {self.bot.user.name}?")
 
-def setup(client):
-    client.add_cog(ModerationCog(client))
+def setup(bot):
+    bot.add_cog(ModerationCog(bot))

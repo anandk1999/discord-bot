@@ -6,42 +6,30 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+intents = discord.Intents().all()
+
 TOKEN = os.environ.get("TOKEN")
-client = commands.Bot(command_prefix='d!')
+bot = commands.Bot(command_prefix='.', intents=intents)
 
 # Bot initialized
-@client.event
+@bot.event
 async def on_ready():
-    print(f'{client.user.name} is ready.')
-    await client.change_presence(activity=discord.Streaming(name="duck pictures.", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
+    print(f'{bot.user.name} is ready.')
+    await bot.change_presence(activity=discord.Streaming(name="Use .help to learn more!", url="https://linktr.ee/RutgersEsports"))
 
-@commands.is_owner()
-@client.command()
-async def load(ctx, extension):
-    """Loads a cog"""
-    client.load_extension(f'cogs.{extension}')
+class CustomHelpCommand(commands.MinimalHelpCommand):
+    async def send_pages(self):
+        destination = self.get_destination()
+        for page in self.paginator.pages:
+            embed = discord.Embed(description=page, color=0xC94949)
+            await destination.send(embed=embed)
 
-@commands.is_owner()
-@client.command()
-async def unload(ctx, extension):
-    """Unloads a cog"""
-    client.unload_extension(f'cogs.{extension}')
+bot.help_command = CustomHelpCommand()
 
 # Cogs
-for filename in os.listdir('./cogs/info'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.info.{filename[:-3]}')
+for group in os.listdir('./cogs'):
+    for cog in os.listdir(f'./cogs/{group}'):
+        if cog.endswith('.py'):
+            bot.load_extension(f'cogs.{group}.{cog[:-3]}')
 
-for filename in os.listdir('./cogs/moderation'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.moderation.{filename[:-3]}')
-
-for filename in os.listdir('./cogs/music'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.music.{filename[:-3]}')
-
-for filename in os.listdir('./cogs/inventory'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.inventory.{filename[:-3]}')
-
-client.run(TOKEN)
+bot.run(TOKEN)

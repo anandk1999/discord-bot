@@ -10,10 +10,10 @@ load_dotenv()
 
 class InventoryCog(commands.Cog):
 
-    def __init__(self, client):
-        self.client = client
-    # Commands
+    def __init__(self, bot):
+        self.bot = bot
 
+    # Commands
     # Get a single item from inventory
     @commands.command(aliases=['inv'])
     @commands.is_owner()
@@ -57,5 +57,5 @@ class InventoryCog(commands.Cog):
         if isinstance(error, commands.NotOwner):
             await ctx.send("You do not have permissions to run this command.")
 
-def setup(client):
-    client.add_cog(InventoryCog(client))
+def setup(bot):
+    bot.add_cog(InventoryCog(bot))

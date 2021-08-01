@@ -8,8 +8,8 @@ from discord.ext import commands
 
 class CalendarCog(commands.Cog):
 
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, bot):
+        self.bot = bot
 
     # Commands
     @commands.command()
@@ -37,11 +37,8 @@ class CalendarCog(commands.Cog):
             # Create data set
             title = event["summary"]
             start_time = event["start"]["dateTime"]
-            description = "No description."
-            if "description" in event:
-                description = event["description"]
+            description = event["description"] if "description" in event else "No description."
             formatted_start_time = datetime.datetime.strftime(parse(start_time), format="%B %d, %Y")
-
             # Create embed for single event and add to embeds list
             embed = discord.Embed(color=ctx.author.color, title=title, description=description)
             embed.add_field(name="Starts On", value=formatted_start_time, inline=True)
@@ -55,5 +52,5 @@ class CalendarCog(commands.Cog):
         paginator.add_reaction('⏭️', "last")
         await paginator.run(embeds)
 
-def setup(client):
-    client.add_cog(CalendarCog(client))
+def setup(bot):
+    bot.add_cog(CalendarCog(bot))
