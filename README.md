@@ -53,7 +53,7 @@ Here's a few suggestions to help:
 1. Star the project.
 2. Find and report [issues](https://github.com/rutgersesports/discord-bot/issues).
 3. Submit [PRs](https://github.com/rutgersesports/discord-bot/pulls) to help solve issues or add features.
-4. Send feature requests [our Discord](https://discord.gg/RutgersEsports)!
+4. Send feature requests to [our Discord](https://discord.gg/RutgersEsports)!
 
 We'll be creating a contributing guide/wiki in the near future.
 
